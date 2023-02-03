@@ -1,12 +1,15 @@
-// import { Badge } from "@material-ui/core";
-// import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { Search, ShoppingCartOutlined } from "@mui/icons-material";
+import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import logo  from "../utils/logo.png"
-// import { mobile } from "../responsive";
+import Announcement from "./AnnounceNav";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 60px;
+  margin-top:0;
+  
 `;
 
 const Wrapper = styled.div`
@@ -46,7 +49,7 @@ const Center = styled.div`
 
 const Logo = styled.img`
   font-weight: bold;
-  width:30%;
+  width:10%;
   height:100%;
   background-color:#fff;
 `;
@@ -65,31 +68,36 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="Search" />
-            {/* <Search style={{ color: "gray", fontSize: 16 }} /> */}
-          </SearchContainer>
-        </Left>
-        <Center>
-          <Logo
-             src={logo} alt=""
-          />
-        </Center>
-        <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
-          <MenuItem>
-            {/* <Badge badgeContent={4} color="primary"> */}
-            {/* <ShoppingCartOutlined /> */}
-            {/* </Badge> */}
-          </MenuItem>
-        </Right>
-      </Wrapper>
-    </Container>
+    <>
+      {/* //Announcement */}
+      <Announcement />
+
+      <Container>
+        <Wrapper>
+          <Left>
+            <Language>EN</Language>
+            <SearchContainer>
+              <Input placeholder="Search" />
+              <Search style={{ color: "gray", fontSize: 16 }} />
+            </SearchContainer>
+          </Left>
+
+          <Center>
+            <Logo src={logo} alt="" />
+          </Center>
+
+          <Right>
+            <MenuItem>REGISTER</MenuItem>
+            <MenuItem>SIGN IN</MenuItem>
+            <MenuItem>
+              <Badge badgeContent={4} color="primary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
+          </Right>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 
