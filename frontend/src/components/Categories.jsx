@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { categories } from "../data";
 import { mobile } from "../responsive";
 import CategoryItem from "./CategoryItem";
+import SectionNav from "./SectionNav";
 
 const Container = styled.div`
   display: flex;
@@ -12,12 +13,16 @@ const Container = styled.div`
 `;
 
 const Categories = () => {
+  const heading = 'Category'
   return (
+    <>
+      <SectionNav Heading={heading} />
     <Container>
       {categories.map((item) => (
         <CategoryItem item={item} key={item.id} />
       ))}
-    </Container>
+      </Container>
+      </>
   );
 };
 

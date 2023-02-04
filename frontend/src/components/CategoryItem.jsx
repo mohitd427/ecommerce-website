@@ -4,7 +4,7 @@ import { mobile } from "../responsive";
 const Container = styled.div`
   flex: 1;
   margin: 3px;
-  height: 70vh;
+  height: 60vh;
   position: relative;
   :hover {
     transform: scale(1.1);
@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 95%;
   height: 100%;
   object-fit: cover;
   ${mobile({ height: "20vh" })}

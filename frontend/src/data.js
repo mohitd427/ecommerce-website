@@ -36,7 +36,17 @@ export const categories = [
   {
     id: 3,
     img: "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=600",
-    title: "ELECTRONICS RANGE",
+    title: "ELECTRONICS",
+  },
+  {
+    id: 4,
+    img: "https://images.pexels.com/photos/1021145/pexels-photo-1021145.jpeg?auto=compress&cs=tinysrgb&w=600",
+    title: "FOOTWEARS",
+  },
+  {
+    id: 5,
+    img: "https://images.pexels.com/photos/214659/pexels-photo-214659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    title: "BOOKS",
   },
 ];
 
