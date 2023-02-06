@@ -60,11 +60,13 @@ const Image = styled.img`
 
 const InfoContainer = styled.div`
   flex: 1;
-  padding: 50px;
+  padding: 270px;
+  background-image: url("https://as1.ftcdn.net/v2/jpg/02/64/92/28/1000_F_264922838_NErJEovZiP9MTa49apqL1Vs3f88ZT8Dg.jpg");
 `;
 
 const Title = styled.h1`
   font-size: 70px;
+  color:#fff;
 `;
 
 const Desc = styled.p`

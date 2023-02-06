@@ -5,6 +5,7 @@ import styled from "styled-components";
 import logo  from "../utils/logo.png"
 import Announcement from "./AnnounceNav";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -61,9 +62,13 @@ const Right = styled.div`
 `;
 
 const MenuItem = styled.div`
+height:20px;
+width:80px;
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
+  border:1px solid red:
+  backgorund-color:red;
 `;
 
 const Navbar = () => {
@@ -74,24 +79,33 @@ const Navbar = () => {
 
       <Container>
         <Wrapper>
+          <Center>
+            <Logo src={logo} alt="" />
+          </Center>
           <Left>
-            <Language>EN</Language>
+            <Language>ENJOY SHOPPING</Language>
             <SearchContainer>
               <Input placeholder="Search" />
               <Search style={{ color: "gray", fontSize: 16 }} />
             </SearchContainer>
           </Left>
 
-          <Center>
-            <Logo src={logo} alt="" />
-          </Center>
-
           <Right>
-            <MenuItem>REGISTER</MenuItem>
-            <MenuItem>SIGN IN</MenuItem>
             <MenuItem>
-              <Badge badgeContent={4} color="primary">
-                <ShoppingCartOutlined />
+              <Link to="/register" style={{ textDecoration: "none" }}>
+                SIGN UP
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                LOG IN
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Badge badgeContent={2} color="primary">
+                <Link to="/cart" style={{ textDecoration: "none" }}>
+                  <ShoppingCartOutlined />
+                </Link>
               </Badge>
             </MenuItem>
           </Right>

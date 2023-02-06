@@ -4,12 +4,12 @@ import {
   MailOutline,
   Phone,
   Pinterest,
-  Room,
+  Room,  
   Twitter,
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import logo from "../utils/logo.png"
+import logo from "../utils/logo1.png"
 
 
 
@@ -24,21 +24,11 @@ const Footer = () => {
             under this Earth. We are devoted to our customers in order to
             provide them goods from all over the world.
           </Desc>
-          <SocialContainer>
-            <SocialIcon color="3B5999">
-              <Facebook />
-            </SocialIcon>
-            <SocialIcon color="E4405F">
-              <Instagram />
-            </SocialIcon>
-            <SocialIcon color="55ACEE">
-              <Twitter />
-            </SocialIcon>
-            <SocialIcon color="E60023">
-              <Pinterest />
-            </SocialIcon>
-          </SocialContainer>
+          
+          <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
         </Left>
+        <hr />
+
         <Center>
           <Title>Redirects</Title>
           <List>
@@ -54,6 +44,9 @@ const Footer = () => {
             <ListItem>Terms</ListItem>
           </List>
         </Center>
+
+        <hr />
+
         <Right>
           <Title>Contact</Title>
           <ContactItem>
@@ -68,7 +61,22 @@ const Footer = () => {
             <MailOutline style={{ marginRight: "10px" }} />{" "}
             zenithzone143@trendings.com
           </ContactItem>
-          <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+          <hr />
+
+          <SocialContainer>
+            <SocialIcon color="3B5999">
+              <Facebook />
+            </SocialIcon>
+            <SocialIcon color="E4405F">
+              <Instagram />
+            </SocialIcon>
+            <SocialIcon color="55ACEE">
+              <Twitter />
+            </SocialIcon>
+            <SocialIcon color="E60023">
+              <Pinterest />
+            </SocialIcon>
+          </SocialContainer>
         </Right>
       </Container>
       <Text>Trademark @ ZenithZone Private Limited</Text>
@@ -78,7 +86,10 @@ const Footer = () => {
 
 const Container = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })}
+  height:400px;
+  color:#fff;
+  background-color:black;
+  ${mobile({ flexDirection: "column" ,color:"black", backgroundColor:'#fff'})}
 `;
 
 const Left = styled.div`
@@ -86,6 +97,7 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+ 
 `;
 
 const Image = styled.img`
@@ -97,6 +109,7 @@ const Desc = styled.p`
 `;
 
 const SocialContainer = styled.div`
+margin:30px 0;
   display: flex;
 `;
 
@@ -145,9 +158,11 @@ const ContactItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  margin:30px 0;
 `;
 
 const Payment = styled.img`
+  margin: 30px 0;
   width: 50%;
 `;
 

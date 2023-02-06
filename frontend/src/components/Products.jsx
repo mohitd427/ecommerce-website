@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { popularProducts } from "../data";
 import ProductCard from "./ProductCard";
@@ -12,15 +13,18 @@ const Container = styled.div`
 
 const Products = () => {
     return (
-        <>
-            <SectionNav Heading={"PRODUCTS" } />
-    <Container>
-      {popularProducts.map((item) => (
-        <ProductCard item={item} key={item.id} />
-      ))}
-            </Container>
-            </>
-  );
+      <>
+        <Link to="/products" style={{textDecoration:'none'}}>
+             
+          <SectionNav Heading={"PRODUCTS"} />
+        </Link>
+        <Container>
+          {popularProducts.map((item) => (
+            <ProductCard item={item} key={item.id} />
+          ))}
+        </Container>
+      </>
+    );
 };
 
 export default Products;
