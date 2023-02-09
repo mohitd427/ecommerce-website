@@ -8,7 +8,7 @@ const authenticate = (req, res, next) => {
       if (err) res.status(403).send({ msg: "Token is not valid" });
 
       req.user = user;
-      console.log(user,"in authenticate");
+      // console.log(user,"in authenticate");
       next();
     });
   } else {
@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
 
 const verifyTokenAndAuthorization = (req, res, next) => {
     authenticate(req, res, () => {
-        console.log(req.user.id, "in verifytokenandauthorization");
+        // console.log(req.user.id, "in verifytokenandauthorization");
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
