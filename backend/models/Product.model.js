@@ -43,7 +43,6 @@ const productSchema = new mongoose.Schema({
   userID: String,
 });
 
-
 const ProductModel = mongoose.model("product", productSchema);
 
 module.exports = {

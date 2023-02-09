@@ -2,9 +2,8 @@ const express = require("express");
 const { connection } = require("./config/db");
 const { userRouter } = require("./routes/User.route")
 const { productRouter } = require("./routes/Product.route")
-const { authenticate } = require("./middleware/authenticate.mw");
+// const { authenticate } = require("./middleware/authenticate.mw");
 const cors = require("cors");
-const { config } = require("dotenv");
 require("dotenv").config();
 
 
@@ -16,8 +15,8 @@ app.get("/", (req, res) => {
   res.send("WelCome To Zenith Zone");
 });
 
-app.use("/users", userRouter)
-app.use(authenticate)
+app.use("/user", userRouter)
+// app.use(authenticate)
 app.use("/products",productRouter)
 
 app.listen(process.env.PORT || 8080 , async () => {
