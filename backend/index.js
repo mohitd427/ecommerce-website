@@ -7,7 +7,8 @@ const cors = require("cors");
 const { cartRouter } = require("./routes/Cart.route");
 const { orderRouter } = require("./routes/Order.route");
 require("dotenv").config();
-
+const paymentRouter = require("./routes/payment.route");
+const stripe = require("./routes/stripe")
 
 const app = express();
 app.use(express.json());
@@ -21,7 +22,9 @@ app.use("/users", userRouter)
 // app.use(authenticate)
 app.use("/products", productRouter)
 app.use("/carts", cartRouter)
-app.use("/orders",orderRouter)
+app.use("/orders", orderRouter)
+app.use("/checkout", paymentRouter)
+app.use("/stripe",stripe)
 
 app.listen(process.env.PORT || 8080 , async () => {
   try {

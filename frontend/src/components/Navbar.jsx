@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 const Container = styled.div`
   height: 60px;
   margin-top:0;
+  ${mobile({height:"50px" })}
   
 `;
 
@@ -18,6 +19,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${mobile({ padding: "10px 0px" })}
 `;
 
 const Left = styled.div`
@@ -29,6 +31,7 @@ const Left = styled.div`
 const Language = styled.span`
   font-size: 14px;
   cursor: pointer;
+  ${mobile({ display: "none" })}
 `;
 
 const SearchContainer = styled.div`
@@ -41,6 +44,7 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
+  ${mobile({ width: "50px" })}
 `;
 
 const Center = styled.div`
@@ -50,25 +54,26 @@ const Center = styled.div`
 
 const Logo = styled.img`
   font-weight: bold;
-  width:10%;
-  height:100%;
-  background-color:#fff;
+  width: 10%;
+  height: 100%;
+  background-color: #fff;
+  ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
 const MenuItem = styled.div`
-height:20px;
-width:80px;
+
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
-  border:1px solid red:
-  backgorund-color:red;
+
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
 const Navbar = () => {

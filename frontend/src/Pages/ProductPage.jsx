@@ -5,6 +5,8 @@ import Products from "../components/Products";
 // import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -37,46 +39,60 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const ProductPage = () => {
+
+  const location = useLocation();
+  const cat = location.pathname.split('/')[2];
+  const [filters, setFilters] = useState({});
+  const [sort, setSort] = useState('newest');
+  
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters, [e.target.name]: value
+    })
+    
+  }
+  console.log(filters);
   return (
-    <Container>
-      {/* <Title>Dresses</Title> */}
-      <FilterContainer>
-        <Filter>
-          <FilterText>Filter By:</FilterText>
-          <Select>
-            <Option disabled selected>
-              Color
-            </Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
-          </Select>
-          <Select>
-            <Option disabled selected>
-              Size
-            </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
-          </Select>
-        </Filter>
-        <Filter>
-          <FilterText>Sort By:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
-          </Select>
-        </Filter>
-      </FilterContainer>
-      <Products />
-      {/* <Newsletter /> */}
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        {/* <Title>Dresses</Title> */}
+        <FilterContainer>
+          <Filter>
+            <FilterText>Filter By:</FilterText>
+            <Select name="color" onChange={handleFilters}>
+              <Option disabled>Color</Option>
+              <Option>White</Option>
+              <Option>Black</Option>
+              <Option>Red</Option>
+              <Option>Blue</Option>
+              <Option>Yellow</Option>
+              <Option>Green</Option>
+            </Select>
+
+            <Select name="size" onChange={handleFilters}>
+              <Option disabled>Size</Option>
+              <Option>XS</Option>
+              <Option>S</Option>
+              <Option>M</Option>
+              <Option>L</Option>
+              <Option>XL</Option>
+            </Select>
+          </Filter>
+          <Filter>
+            <FilterText>Sort By:</FilterText>
+            <Select onChange={(e) => setSort(e.target.value)}>
+              <Option value={"newest"}>Newest</Option>
+              <Option value={"asc"}>Price (asc)</Option>
+              <Option value={"desc"}>Price (desc)</Option>
+            </Select>
+          </Filter>
+        </FilterContainer>
+        <Products cat={cat} filters={filters} sort ={sort} />
+        {/* <Newsletter /> */}
+      </Container>
+    </>
   );
 };
 

@@ -1,15 +1,45 @@
+import axios from "axios";
+import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
 const Register = () => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const registerSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/user/register", { ...user });
+
+      localStorage.setItem("firstLogin", true);
+
+      window.location.href = "/";
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
   return (
     <Container>
       <Wrapper>
         <Title>REGISTER HERE</Title>
         <Form>
-          <Input placeholder="First name" />
-          <Input placeholder="Last name" />
-          <Input placeholder="Username" />
+          <Input
+            name="name"
+            required
+            placeholder="Name"
+            value={user.name}
+            onChange={onChangeInput}
+          />
+          <Input placeholder="Username"  />
           <Input placeholder="Email" />
           <Input placeholder="Password" />
           <Input placeholder="Confirm password" />
@@ -17,7 +47,7 @@ const Register = () => {
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE ACCOUNT</Button>
+          <Button onClick={"()=>registerSubmit()"}>CREATE ACCOUNT</Button>
         </Form>
       </Wrapper>
     </Container>

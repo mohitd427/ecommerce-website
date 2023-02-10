@@ -27,26 +27,31 @@ export const categories = [
     id: 1,
     img: "https://images.pexels.com/photos/6184464/pexels-photo-6184464.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "MENS STYLE!",
+    cat: "men",
   },
   {
     id: 2,
     img: "https://images.pexels.com/photos/13660534/pexels-photo-13660534.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "WOMEN LOVE",
+    cat: "women",
   },
   {
     id: 3,
     img: "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "ELECTRONICS",
+    cat: "electronics",
   },
   {
     id: 4,
     img: "https://images.pexels.com/photos/1021145/pexels-photo-1021145.jpeg?auto=compress&cs=tinysrgb&w=600",
     title: "FOOTWEARS",
+    cat: "footwear",
   },
   {
     id: 5,
     img: "https://images.pexels.com/photos/214659/pexels-photo-214659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     title: "BOOKS",
+    cat:"books"
   },
 ];
 
@@ -54,6 +59,7 @@ export const popularProducts = [
   {
     id: 1,
     img: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600",
+    
   },
   {
     id: 2,

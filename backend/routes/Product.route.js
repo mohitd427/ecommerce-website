@@ -57,7 +57,7 @@ productRouter.get("/:id", async (req, res) => {
 });
 
 // GET ALL PRODUCTS
-productRouter.get("/", verifyTokenAndAdmin, async (req, res) => {
+productRouter.get("/",  async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category
  try {
