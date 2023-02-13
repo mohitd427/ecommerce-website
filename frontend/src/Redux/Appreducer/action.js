@@ -4,9 +4,9 @@ import axios from "axios";
 const getProducts = () => (dispatch)=>{
     dispatch({ type: types.GET_PRODUCT_REQUEST })
     return axios
-      .get(`https://fine-cyan-kangaroo-cap.cyclic.app/products`)
+      .get(`http://localhost:8080/products`)
       .then((r) => {
-        console.log(r.data);
+        console.log("in appReducer action of getproduct", r.data);
         dispatch({ type: types.GET_PRODUCT_SUCCESS, payload: r.data });
       })
       .catch((e) => {

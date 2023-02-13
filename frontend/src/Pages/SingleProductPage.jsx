@@ -1,25 +1,69 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, TextDecrease } from "@mui/icons-material";
+import { ButtonBase } from "@mui/material";
+import { Card } from "antd";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { publicReq } from "../requestMethod";
 import { mobile } from "../responsive";
-
+import StarIcon from "@mui/icons-material/Star";
 
 const SingleProductPage = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProducts] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        publicReq.get(`products/${id}`).then((res) => setProducts(res.data));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProducts();
+  }, [id]);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+     quantity>1 && setQuantity(quantity - 1);
+    } else if (type === "inc") {
+      setQuantity(quantity + 1);
+    }
+  }
+
+  const handleAddToCart = () => {
+    //update cart
+  }
+
+
   return (
     <Container>
       <Wrapper>
         <ImgContainer>
-          <Image src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=600" />
+          <Image src={product.image_full_1} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-            iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-            tristique tortor pretium ut. Curabitur elit justo, consequat id
-            condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>Price : 20/-</Price>
+          <Title>{product.title}</Title>
+          <Desc>{product.description}</Desc>
+          <Price>{product.original_price}</Price>
+          <button
+            style={{
+              backgroundColor: "white",
+              color: "red",
+              fontSize: "20px",
+              borderRadius: "10px",
+              border: "1px solid red",
+              padding: "10px",
+              display: "flex",
+              alignItems: "center",
+              margin: "15px",
+            }}
+          >
+            <StarIcon style={{ color: "red", paddingRight: "4px" }} />
+            {product.rating}
+          </button>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -40,11 +84,11 @@ const SingleProductPage = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{ quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleAddToCart}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
@@ -62,19 +106,18 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color:#e4e7ed;
-   
+  background-color: #e4e7ed;
 `;
 
 const Image = styled.img`
   width: 65%;
   height: 80%;
-  
+
   object-fit: cover;
   ${mobile({ height: "40vh" })}
   :hover {
@@ -101,7 +144,7 @@ const Desc = styled.p`
 const Price = styled.span`
   font-weight: 100;
   font-size: 40px;
-  color:teal;
+  color: teal;
 `;
 
 const FilterContainer = styled.div`
@@ -109,7 +152,7 @@ const FilterContainer = styled.div`
   margin: 30px 0px;
   display: flex;
   justify-content: space-between;
-  
+
   ${mobile({ width: "100%" })}
 `;
 
@@ -151,14 +194,13 @@ const AmountContainer = styled.div`
   display: flex;
   align-items: center;
   font-weight: 700;
-  
 `;
 
 const Amount = styled.span`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-background-color:orange;
+  background-color: orange;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,7 +209,7 @@ background-color:orange;
 
 const Button = styled.button`
   padding: 15px;
-  border-radius:30px;
+  border-radius: 30px;
   border: none;
   background-color: orange;
   cursor: pointer;

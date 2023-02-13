@@ -4,13 +4,13 @@ import { Navigate, useNavigate } from "react-router-dom";
 import * as types from "./actionTypes";
 
 //reg  ister user function
-
-const userRegiter = () => (dispatch) => {
+// https://fine-cyan-kangaroo-cap.cyclic.app/
+const userRegiter = (payload) => (dispatch) => {
   dispatch({ type: types.REGISTER_USER_REQUEST });
   return axios
-    .get(`https://fine-cyan-kangaroo-cap.cyclic.app/products`)
+    .get(`http://localhost:8080/users/register`)
     .then((r) => {
-      console.log(r.data);
+      console.log("In register js action userRegister",r.data);
       dispatch({ type: types.REGISTER_USER_SUCCESS, payload: r.data });
     })
     .catch((e) => {

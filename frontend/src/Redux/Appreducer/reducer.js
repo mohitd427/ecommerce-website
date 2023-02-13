@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
         //get Products 
       case types.GET_PRODUCT_REQUEST:
         return { ...state, isLoading: true, products: [] };
-      case types.GET_PRODUCT_SUCCESS:
+      case types.GET_PRODUCT_SUCCESS: 
         return { ...state, isLoading: false, products: payload };
       case types.GET_PRODUCT_FAILURE:
             return { ...state, isLoading: false, isError: true, products: [] };

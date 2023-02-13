@@ -52,7 +52,7 @@ const ProductPage = () => {
     })
     
   }
-  console.log(filters);
+  // console.log(filters,'filters in products page');
   return (
     <>
       <Navbar />
@@ -92,6 +92,7 @@ const ProductPage = () => {
         <Products cat={cat} filters={filters} sort ={sort} />
         {/* <Newsletter /> */}
       </Container>
+      <Footer/>
     </>
   );
 };
