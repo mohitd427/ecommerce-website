@@ -7,17 +7,23 @@ import styled from "styled-components";
 import { publicReq } from "../requestMethod";
 import { mobile } from "../responsive";
 import StarIcon from "@mui/icons-material/Star";
+import { addProduct } from "../Redux/cartRedux";
+import { useDispatch } from "react-redux";
+import Navbar from "../components/Navbar";
 
 const SingleProductPage = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const [product, setProducts] = useState({});
+  const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  
+
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        publicReq.get(`products/${id}`).then((res) => setProducts(res.data));
+        publicReq.get(`products/${id}`).then((res) => setProduct(res.data));
       } catch (err) {
         console.log(err);
       }
@@ -35,64 +41,69 @@ const SingleProductPage = () => {
 
   const handleAddToCart = () => {
     //update cart
+    dispatch(addProduct({...product,quantity})) //color,size
+
   }
 
 
   return (
-    <Container>
-      <Wrapper>
-        <ImgContainer>
-          <Image src={product.image_full_1} />
-        </ImgContainer>
-        <InfoContainer>
-          <Title>{product.title}</Title>
-          <Desc>{product.description}</Desc>
-          <Price>{product.original_price}</Price>
-          <button
-            style={{
-              backgroundColor: "white",
-              color: "red",
-              fontSize: "20px",
-              borderRadius: "10px",
-              border: "1px solid red",
-              padding: "10px",
-              display: "flex",
-              alignItems: "center",
-              margin: "15px",
-            }}
-          >
-            <StarIcon style={{ color: "red", paddingRight: "4px" }} />
-            {product.rating}
-          </button>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="red" />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
-              <Amount>{ quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
-            </AmountContainer>
-            <Button onClick={handleAddToCart}>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar/>
+      <Container>
+        <Wrapper>
+          <ImgContainer>
+            <Image src={product.image} />
+          </ImgContainer>
+          <InfoContainer>
+            <Title>{product.title}</Title>
+            <Desc>{product.description}</Desc>
+            <Price>{product.price}</Price>
+            <button
+              style={{
+                backgroundColor: "white",
+                color: "red",
+                fontSize: "20px",
+                borderRadius: "10px",
+                border: "1px solid red",
+                padding: "10px",
+                display: "flex",
+                alignItems: "center",
+                margin: "15px",
+              }}
+            >
+              <StarIcon style={{ color: "red", paddingRight: "4px" }} />
+              {product.rating}
+            </button>
+            <FilterContainer>
+              <Filter>
+                <FilterTitle>Color</FilterTitle>
+                <FilterColor color="black" />
+                <FilterColor color="darkblue" />
+                <FilterColor color="red" />
+              </Filter>
+              <Filter>
+                <FilterTitle>Size</FilterTitle>
+                <FilterSize>
+                  <FilterSizeOption>XS</FilterSizeOption>
+                  <FilterSizeOption>S</FilterSizeOption>
+                  <FilterSizeOption>M</FilterSizeOption>
+                  <FilterSizeOption>L</FilterSizeOption>
+                  <FilterSizeOption>XL</FilterSizeOption>
+                </FilterSize>
+              </Filter>
+            </FilterContainer>
+            <AddContainer>
+              <AmountContainer>
+                <Remove onClick={() => handleQuantity("dec")} />
+                <Amount>{quantity}</Amount>
+                <Add onClick={() => handleQuantity("inc")} />
+              </AmountContainer>
+              <Button onClick={handleAddToCart}>ADD TO CART</Button>
+            </AddContainer>
+          </InfoContainer>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

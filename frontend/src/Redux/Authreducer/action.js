@@ -8,7 +8,7 @@ import * as types from "./actionTypes";
 const userRegiter = (payload) => (dispatch) => {
   dispatch({ type: types.REGISTER_USER_REQUEST });
   return axios
-    .get(`http://localhost:8080/users/register`)
+    .post(`http://localhost:8080/users/register`)
     .then((r) => {
       console.log("In register js action userRegister",r.data);
       dispatch({ type: types.REGISTER_USER_SUCCESS, payload: r.data });
@@ -19,28 +19,19 @@ const userRegiter = (payload) => (dispatch) => {
     });
 };
 
-const get_login_req_fn = () => {
-  return { type: types.LOGIN_REQ };
-};
-const get_login_succ_fn = (userdata) => {
-  return { type: types.LOGIN_SUCC, payload: userdata };
-};
-const get_login_failure_fn = () => {
-  return { type: types.LOGIN_FAILURE };
-};
+
 
 const Login_handeler = (payload) => (dispatch) => {
-  dispatch(get_login_req_fn());
+  dispatch({ type: types.LOGIN_REQEST});
   return axios
-    .post("https://lazy-puce-fawn.cyclic.app/user/login", payload)
+    .post("http://localhost:8080/users/login", payload)
     .then((res) => {
        console.log(res.data)
-      dispatch(get_login_succ_fn(res.data))
-    
+      dispatch({type:types.LOGIN_SUCCESS,payload:r.data})    
     })
     .catch((err) => {
       console.log(err,"error");
-      dispatch(get_login_failure_fn());
+      dispatch({type:types.LOGIN_FAILURE});
     });
 };
 

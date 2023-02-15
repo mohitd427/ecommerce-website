@@ -6,6 +6,7 @@ import logo  from "../utils/logo.png"
 import Announcement from "./AnnounceNav";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   height: 60px;
@@ -77,6 +78,14 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+
+  const quantity = useSelector(state => state.cart.quantity)
+  const user = useSelector(state=>state.user.currentUser.user)
+  console.log(user.username, 'in navbar')
+  
+  const handleLogout = () => {
+    
+  }
   return (
     <>
       {/* //Announcement */}
@@ -96,23 +105,28 @@ const Navbar = () => {
           </Left>
 
           <Right>
-            <MenuItem>
-              <Link to="/register" style={{ textDecoration: "none" }}>
+            <MenuItem>{
+              user ? user.username : <Link to="/register" style={{ textDecoration: "none" }}>
                 SIGN UP
               </Link>
+            }
+              
             </MenuItem>
             <MenuItem>
-              <Link to="/login" style={{ textDecoration: "none" }}>
+             { user ? <button onClick={handleLogout}>LOG OUT</button> : <Link to="/login" style={{ textDecoration: "none" }}>
                 LOG IN
               </Link>
+              }
             </MenuItem>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
             <MenuItem>
-              <Badge badgeContent={2} color="primary">
-                <Link to="/cart" style={{ textDecoration: "none" }}>
+              <Badge badgeContent={quantity} color="primary">
+               
                   <ShoppingCartOutlined />
-                </Link>
+               
               </Badge>
-            </MenuItem>
+              </MenuItem>
+            </Link>
           </Right>
         </Wrapper>
       </Container>

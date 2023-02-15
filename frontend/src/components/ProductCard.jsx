@@ -71,7 +71,7 @@ const ProductCard = ({ item }) => {
   return (
     <Container>
       <Circle />
-      <Image src={item.image_full_1} />
+      <Image src={item.image} />
       <Info>
         <Icon>
           <ShoppingCartOutlined />

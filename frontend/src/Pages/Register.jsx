@@ -14,7 +14,8 @@ const Register = () => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
+  console.log(user)
+  
   const registerSubmit = (e) => {
   
   };

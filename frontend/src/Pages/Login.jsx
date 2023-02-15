@@ -1,6 +1,43 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 import { mobile } from "../responsive";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../Redux/apiCalls";
+
+
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(dispatch, { email, password });
+  };
+  return (
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN HERE</Title>
+        <Form>
+          <Input type='email'  placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
+          <Input type='password'  placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
+          <Button onClick={handleLogin} disabled={isFetching}>LOG IN</Button>
+          <Text>FORGOT PASSWORD?</Text>
+          <Text>
+            <Link to="/register" style={{ textDecoration: "none" }}>
+              CREATE A NEW ACCOUNT
+            </Link>
+          </Text>
+        </Form>
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default Login;
 
 const Container = styled.div`
   width: 100vw;
@@ -51,6 +88,10 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
+  &:disabled{
+    color:blue;
+    cursor:not-allowed
+  }
 `;
 
 const Text = styled.p`
@@ -58,30 +99,7 @@ const Text = styled.p`
   font-size: 12px;
   text-decoration: underline;
   cursor: pointer;
-  color:black;
+  color: black;
 `;
-
-const Login = () => {
-  return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN HERE</Title>
-        <Form>
-          <Input placeholder="Username" />
-          <Input placeholder="Password" />
-          <Button>LOG IN</Button>
-          <Text>FORGOT PASSWORD?</Text>
-          <Text>
-            <Link to="/register" style={{ textDecoration: "none" }}>
-              CREATE A NEW ACCOUNT
-            </Link>
-          </Text>
-        </Form>
-      </Wrapper>
-    </Container>
-  );
-};
-
-export default Login;
 
 // https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940

@@ -1,11 +1,50 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, StayPrimaryPortraitRounded } from "@mui/icons-material";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import logo from "../utils/logo1.png";
+import { useEffect, useState } from "react";
+import { userReq } from "../requestMethod";
+import { Navigate, useNavigate } from "react-router-dom";
+
+
+
+const KEY =
+  "pk_test_51MZhA2SGRaR9CnAJ3Xy3Sgx62luzGXTNjWqIbRrrjWqAfqi34SXhN4MnBxa7XXP24r1gRUne4YCcrn1tBtAFCBfj009K4NnRS6";
+
 
 
 const Cart = () => {
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
+
+   const cart = useSelector(state => state.cart)
+  console.log(cart);
+   const onToken = (token) => {
+     setStripeToken(token);
+  }
+
+  console.log(stripeToken)
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        await userReq.post("checkout/payment", {
+          tokenId : stripeToken.id,
+          amount: cart.total * 100
+                 
+        }).then(res=>navigate("/Checkout",{data:res.data}))
+      } catch (err) {
+        
+      }
+    }
+ stripeToken && makeRequest()
+  }, [stripeToken,cart.total,navigate])
+  
+ 
   return (
     <Container>
       <Navbar />
@@ -14,72 +53,50 @@ const Cart = () => {
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
+            <TopText>Shopping Bag({cart.quantity})</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://images.pexels.com/photos/249597/pexels-photo-249597.jpeg?auto=compress&cs=tinysrgb&w=600" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> Nikon Camera
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> 37.5
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products.map((product) => (
+              <Product>
+                <ProductDetail>
+                  <Image src={product.image} />
+                  <Details>
+                    <ProductName>
+                      <b>Product:</b> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID:</b> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size:</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    $ {product.price * product.quantity}
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
 
             <Hr />
-            
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> HAKURA T-SHIRT
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 93813718293
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>1</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$ 20</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -91,18 +108,32 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="Zenith zone"
+              image={logo}
+              billingAddres
+              shippingAddress
+              locale="auto"
+              description={`Your total is ${cart.total}`}
+              amount={cart.total*100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button> CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
+      {/* <Footer /> */}
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  min-height:120vh;
+`;
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -219,6 +250,7 @@ const Hr = styled.hr`
 
 const Summary = styled.div`
   flex: 1;
+  min-height:400px
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
